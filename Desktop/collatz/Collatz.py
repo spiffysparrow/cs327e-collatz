@@ -52,18 +52,16 @@ return the max cycle length in the range [i, j]
         cycle = collatz_calc(x)
         if cycle>max:
             max = cycle
-    w.write(str(cache))
     return max
 
 
 # -------------
-# collatz_solve
+# collatz_calc
 # -------------
-cacheRange = 10000
+cacheRange = 10000000
 cache=[0]*cacheRange
 
 def collatz_calc(val):
-    print(str(val))
     if val>1:
         if val<cacheRange:
             if cache[int(val)]!=0:
