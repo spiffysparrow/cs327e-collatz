@@ -27,6 +27,33 @@ return true if that succeeds, false otherwise
     assert a[1] > 0
     return True
 
+
+# -------------
+# collatz_calc
+# -------------
+cacheRange = 1000000
+cache=[0]*cacheRange
+
+def collatz_calc(val):
+    if val==1:
+        return 1
+    if val<cacheRange:
+        cacheVal=cache[int(val)]
+        if cacheVal!=0:
+            return cacheVal
+    if val%2==0:
+        cycle = collatz_calc(val/2) + 1
+        if val<cacheRange:
+            cache[int(val)] = cycle
+        return cycle
+    else:
+        cycle = collatz_calc(val*3+1) + 1
+        if val<cacheRange:
+            cache[int(val)] = cycle
+        return cycle
+
+
+
 # ------------
 # collatz_eval
 # ------------
@@ -41,43 +68,19 @@ return the max cycle length in the range [i, j]
 """
     assert i > 0
     assert j > 0
-
     if i>j:
         i,j = j,i
 
     w = open("output.txt","w")
     
     max = 0
-    for x in range(i, j):
+    if i<(j/2):
+        i=j/2
+    for x in range(i, j+1):
         cycle = collatz_calc(x)
         if cycle>max:
             max = cycle
     return max
-
-
-# -------------
-# collatz_calc
-# -------------
-cacheRange = 10000000
-cache=[0]*cacheRange
-
-def collatz_calc(val):
-    if val>1:
-        if val<cacheRange:
-            if cache[int(val)]!=0:
-                return cache[val]
-        if val%2==0:
-            cycle = collatz_calc(val/2) + 1
-            if val<cacheRange:
-                cache[int(val)] = cycle
-            return cycle
-        else:
-            cycle = collatz_calc(val*3+1) + 1
-            if val<cacheRange:
-                cache[int(val)] = cycle
-            return cycle
-    else:
-        return 1
 
 
 # -------------
@@ -108,3 +111,4 @@ w is a writer
     while collatz_read(r, a) :
         v = collatz_eval(a[0], a[1])
         collatz_print(w, a[0], a[1], v)
+

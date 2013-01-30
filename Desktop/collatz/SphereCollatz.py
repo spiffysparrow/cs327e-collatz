@@ -41,14 +41,21 @@ return the max cycle length in the range [i, j]
 """
     assert i > 0
     assert j > 0
+
+    if i>j:
+        i,j = j,i
     
     cacheRange = 1000
     cache=[0]*cacheRange
     max = 0
     for x in range(i, j):
         cycle = 1
-        if x<cacheRange & cache[x]!=0:
-            cycle=cache[x]
+        if x<cacheRange:
+            if cache[x]!=0:
+                cycle=cache[x]
+                if cycle>max:
+                    max = cycle
+                continue
         else:
             while x>1:
                 cycle = cycle+1
