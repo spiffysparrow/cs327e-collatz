@@ -6,9 +6,6 @@
 # Glenn P. Downing
 # ---------------------------
 
-# ------------
-# collatz_read
-# ------------
 
 import sys
 

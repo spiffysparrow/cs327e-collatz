@@ -6,6 +6,7 @@
 # Glenn P. Downing
 # ---------------------------
 
+
 # ------------
 # collatz_read
 # ------------
@@ -59,7 +60,6 @@ def collatz_calc(val):
 # ------------
 
 
-w = open("output.txt","r")
 def collatz_eval (i, j) :
     """
 i is the beginning of the range, inclusive
@@ -70,8 +70,6 @@ return the max cycle length in the range [i, j]
     assert j > 0
     if i>j:
         i,j = j,i
-
-    w = open("output.txt","w")
     
     max = 0
     if i<(j/2):
@@ -111,4 +109,3 @@ w is a writer
     while collatz_read(r, a) :
         v = collatz_eval(a[0], a[1])
         collatz_print(w, a[0], a[1], v)
-
