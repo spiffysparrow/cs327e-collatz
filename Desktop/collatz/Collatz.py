@@ -89,10 +89,3 @@ w is a writer
     while collatz_read(r, a) :
         v = collatz_eval(a[0], a[1])
         collatz_print(w, a[0], a[1], v)
-
-
-import sys       
-r = open("test.txt","r")
-w = open("results.txt","w")
-
-collatz_solve(r, w)
