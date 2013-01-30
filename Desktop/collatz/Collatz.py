@@ -39,14 +39,17 @@ return the max cycle length in the range [i, j]
 """
     assert i > 0
     assert j > 0
+
+    w = open("output.txt","w")
     
     cacheRange = 1000
     cache=[0]*cacheRange
     max = 0
     for x in range(i, j):
         cycle = 1
-        if x<cacheRange & cache[x]!=0:
-            cycle=cache[x]
+        if x<cacheRange:
+            if cache[x]!=0:
+                cycle=cache[x]
         else:
             while x>1:
                 cycle = cycle+1
@@ -56,6 +59,7 @@ return the max cycle length in the range [i, j]
                     x=int(3*x+1)
                 if x<cacheRange:
                     cache[x]=cycle
+
         if cycle>max:
             max = cycle
     assert max > 0
