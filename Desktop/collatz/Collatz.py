@@ -48,25 +48,27 @@ return the max cycle length in the range [i, j]
     cacheRange = 10000
     cache=[0]*cacheRange
     max = 0
-    for x in range(i, j):
-
-        w.write(str(x)+"\n")
+    for x in range(2, 20):
+        num = x
         cycle = 1
+        while x>1:
+
+            if x<cacheRange:
+                if cache[x]!=0:
+
+                    cycle=cycle+cache[x]
+
+                    break
+            cycle = cycle+1
+            if x%2==0:
+                x=int(x/2)
+            else:
+                x=int(3*x+1)
         if x<cacheRange:
-            if cache[x]!=0:
-                cycle=cache[x]
-        else:
-            while x>1:
-                cycle = cycle+1
-                if x%2==0:
-                    x=int(x/2)
-                else:
-                    x=int(3*x+1)
-                if x<cacheRange:
-                    cache[x]=cycle
-        w.write("cyclye"+str(max)+"\n")
+            cache[num]=cycle
         if cycle>max:
             max = cycle
+    w.write(str(cache))
     return max
 
 # -------------
