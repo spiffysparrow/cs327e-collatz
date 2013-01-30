@@ -31,6 +31,8 @@ return true if that succeeds, false otherwise
 # collatz_eval
 # ------------
 
+
+w = open("output.txt","r")
 def collatz_eval (i, j) :
     """
 i is the beginning of the range, inclusive
@@ -45,31 +47,40 @@ return the max cycle length in the range [i, j]
 
     w = open("output.txt","w")
     
-    cacheRange = 10000
-    cache=[0]*cacheRange
     max = 0
-    for x in range(2, 20):
-        num = x
-        cycle = 1
-        while x>1:
-
-            if x<cacheRange:
-                if cache[x]!=0:
-
-                    cycle=cycle+cache[x]
-
-                    break
-            cycle = cycle+1
-            if x%2==0:
-                x=int(x/2)
-            else:
-                x=int(3*x+1)
-        if x<cacheRange:
-            cache[num]=cycle
+    for x in range(i, j):
+        cycle = collatz_calc(x)
         if cycle>max:
             max = cycle
     w.write(str(cache))
     return max
+
+
+# -------------
+# collatz_solve
+# -------------
+cacheRange = 10000
+cache=[0]*cacheRange
+
+def collatz_calc(val):
+    print(str(val))
+    if val>1:
+        if val<cacheRange:
+            if cache[int(val)]!=0:
+                return cache[val]
+        if val%2==0:
+            cycle = collatz_calc(val/2) + 1
+            if val<cacheRange:
+                cache[int(val)] = cycle
+            return cycle
+        else:
+            cycle = collatz_calc(val*3+1) + 1
+            if val<cacheRange:
+                cache[int(val)] = cycle
+            return cycle
+    else:
+        return 1
+
 
 # -------------
 # collatz_print
