@@ -12,6 +12,10 @@
 
 import sys
 
+# ------------
+# collatz_read
+# ------------
+
 def collatz_read (r, a) :
     """
 reads two ints into a[0] and a[1]
@@ -29,9 +33,37 @@ return true if that succeeds, false otherwise
     assert a[1] > 0
     return True
 
+
+# -------------
+# collatz_calc
+# -------------
+cacheRange = 1000000
+cache=[0]*cacheRange
+
+def collatz_calc(val):
+    if val==1:
+        return 1
+    if val<cacheRange:
+        cacheVal=cache[int(val)]
+        if cacheVal!=0:
+            return cacheVal
+    if val%2==0:
+        cycle = collatz_calc(val/2) + 1
+        if val<cacheRange:
+            cache[int(val)] = cycle
+        return cycle
+    else:
+        cycle = collatz_calc(val*3+1) + 1
+        if val<cacheRange:
+            cache[int(val)] = cycle
+        return cycle
+
+
+
 # ------------
 # collatz_eval
 # ------------
+
 
 def collatz_eval (i, j) :
     """
@@ -41,34 +73,18 @@ return the max cycle length in the range [i, j]
 """
     assert i > 0
     assert j > 0
-
     if i>j:
         i,j = j,i
     
-    cacheRange = 1000
-    cache=[0]*cacheRange
     max = 0
-    for x in range(i, j):
-        cycle = 1
-        if x<cacheRange:
-            if cache[x]!=0:
-                cycle=cache[x]
-                if cycle>max:
-                    max = cycle
-                continue
-        else:
-            while x>1:
-                cycle = cycle+1
-                if x%2==0:
-                    x=int(x/2)
-                else:
-                    x=int(3*x+1)
-                if x<cacheRange:
-                    cache[x]=cycle
+    if i<(j/2):
+        i=j/2
+    for x in range(i, j+1):
+        cycle = collatz_calc(x)
         if cycle>max:
             max = cycle
-    assert max > 0
     return max
+
 
 # -------------
 # collatz_print
